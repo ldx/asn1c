@@ -52,10 +52,10 @@ per_type_encoder_f INTEGER_encode_uper;
  * -1/ERANGE: Value encoded is out of range for long representation
  * -1/ENOMEM: Memory allocation failed (in asn_long2INTEGER()).
  */
-int asn_INTEGER2long(const INTEGER_t *i, long *l);
-int asn_INTEGER2ulong(const INTEGER_t *i, unsigned long *l);
-int asn_long2INTEGER(INTEGER_t *i, long l);
-int asn_ulong2INTEGER(INTEGER_t *i, unsigned long l);
+int asn_INTEGER2long(const INTEGER_t *i, long long *l);
+int asn_INTEGER2ulong(const INTEGER_t *i, unsigned long long *l);
+int asn_long2INTEGER(INTEGER_t *i, long long l);
+int asn_ulong2INTEGER(INTEGER_t *i, unsigned long long l);
 
 /*
  * Convert the integer value into the corresponding enumeration map entry.
