@@ -1471,7 +1471,10 @@ OCTET_STRING_decode_uper(asn_codec_ctx_t *opt_codec_ctx,
 				st->bits_unused = 8 - (len_bits & 0x7);
 			/* len_bits be multiple of 16K if repeat is set */
 		}
-		p = REALLOC(st->buf, st->size + len_bytes + 1);
+		if(st->buf)
+			p = REALLOC(st->buf, st->size + len_bytes + 1);
+		else
+			p = CALLOC(1, st->size + len_bytes + 1);
 		if(!p) RETURN(RC_FAIL);
 		st->buf = (uint8_t *)p;
 
