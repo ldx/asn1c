@@ -611,7 +611,7 @@ INTEGER_decode_uper(asn_codec_ctx_t *opt_codec_ctx, asn_TYPE_descriptor_t *td,
 				int i;
 				for (i = 0; i < ct->range_bits; i += 16) {
 					int bits = i + 16 > ct->range_bits ? ct->range_bits - i : 16;
-					int x = per_get_few_bits(pd, bits);
+					unsigned long long x = per_get_few_bits(pd, bits);
 					if(x < 0) _ASN_DECODE_STARVED;
 					value = (x << i) | value;
 					printf("INTEGER decoding bits %d-%d: %ld, new value: %ld\n", i, i + bits, x, value);
@@ -749,10 +749,10 @@ INTEGER_encode_uper(asn_TYPE_descriptor_t *td,
 			int i;
 			for (i = 0; i < ct->range_bits; i += 16) {
 				int bits = i + 16 > ct->range_bits ? ct->range_bits - i : 16;
-				if (per_put_few_bits(po, (uint32_t)(v >> i), bits))
+				if (per_put_few_bits(po, (uint32_t)((v >> i) & 0xffff), bits))
 					_ASN_ENCODE_FAILED;
 				printf("INTEGER encoding next %d-%d bits part value %ld\n",
-					   i, i + bits, v >> i);
+					   i, i + bits, ((v >> i) & 0xffff));
 			}
 		} else {
 			if(per_put_few_bits(po, (uint32_t)(value - ct->lower_bound),
